@@ -216,7 +216,7 @@ public class FirstPersonController : MonoBehaviour
         Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
         if (projectileRigidbody != null)
         {
-            Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
+            //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
             projectileRigidbody.AddForce(direction * letterSpeed);
             projectileRigidbody.AddForce(Vector3.up * 100f);
         }
