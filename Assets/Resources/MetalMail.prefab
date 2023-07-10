@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6688827654424405329}
   - component: {fileID: 6688827654424405334}
   - component: {fileID: 6688827654424405335}
+  - component: {fileID: 4744893061701566848}
   m_Layer: 0
   m_Name: MetalMail
   m_TagString: Untagged
@@ -106,11 +107,24 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6688827654424405332}
   serializedVersion: 2
-  m_Mass: 3
-  m_Drag: 0.1
-  m_AngularDrag: 0.05
+  m_Mass: 1.3
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4744893061701566848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6688827654424405332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1c00a2b1e4d294f95a4d40022be5b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mailScript: {fileID: 11400000, guid: 9c89f2596e755e94886fbb8776d89a70, type: 2}

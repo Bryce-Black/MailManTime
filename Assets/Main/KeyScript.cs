@@ -2,32 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MailScript : MonoBehaviour
+public class KeyScript : MonoBehaviour
 {
-    public MailScriptableObject mailScript;
-    private bool pointsGiven = false;
-
-    private string MailName;
-    private float MailMass;
-    private float MailSpeed;
-    private int MailPoints;
     MailBoxContoller mailBoxController;
 
     FirstPersonController firstPersonController;
-
     private void Start()
     {
         mailBoxController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
-        MailName = mailScript.mailName;
-        MailMass = mailScript.mailMass;
-        MailSpeed = mailScript.mailSpeed;
-        MailPoints = mailScript.mailPoints;
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
-        firstPersonController.ChangeMailInfo(MailName, MailSpeed);
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Boundry")
+        if (collision.collider.tag == "Boundry")
         {
             mailBoxController.MailHasFailed();
             Destroy(this.gameObject);
@@ -36,16 +23,17 @@ public class MailScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Unlocked")
+        if (other.gameObject.tag == this.gameObject.tag)
         {
-            mailBoxController.MailHasBeenDelivered(MailPoints);
+            mailBoxController.KeyHasUnlockedBox();
             Destroy(this.gameObject);
         }
         else
         {
-            mailBoxController.MailHasFailed();
+            mailBoxController.KeyHasFailed();
             Destroy(this.gameObject);
         }
     }
 
 }
+

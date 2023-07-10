@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 6688827654424405329}
   - component: {fileID: 6688827654424405334}
   - component: {fileID: 6688827654424405335}
-  - component: {fileID: -3038129511191781678}
+  - component: {fileID: 794782142129122729}
   m_Layer: 0
-  m_Name: FireMail
-  m_TagString: Untagged
+  m_Name: BlueKey
+  m_TagString: TargetBlue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bb61156fed25d4d4eb6a51a7ce414e5e, type: 2}
+  - {fileID: 2100000, guid: f5f0785339ccf1b438a76752a608c1ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,15 +107,15 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6688827654424405332}
   serializedVersion: 2
-  m_Mass: 0.5
+  m_Mass: 1
   m_Drag: 0.1
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3038129511191781678
+--- !u!114 &794782142129122729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +124,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6688827654424405332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1c00a2b1e4d294f95a4d40022be5b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 742a2f12102f38d4bba62bddd5c3e5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mailScript: {fileID: 11400000, guid: 7900f8b58a6f6854395079f121e8e4c5, type: 2}

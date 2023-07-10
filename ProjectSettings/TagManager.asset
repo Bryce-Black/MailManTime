@@ -6,8 +6,11 @@ TagManager:
   tags:
   - Interactable
   - Boundry
-  - Target
   - MailBoxController
+  - Unlocked
+  - TargetNormal
+  - TargetRed
+  - TargetBlue
   layers:
   - Default
   - TransparentFX
