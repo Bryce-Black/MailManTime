@@ -14,6 +14,7 @@ public class MailScript : MonoBehaviour
     MailBoxContoller mailBoxController;
 
     FirstPersonController firstPersonController;
+    private Rigidbody rb;
 
     private void Start()
     {
@@ -24,6 +25,10 @@ public class MailScript : MonoBehaviour
         MailPoints = mailScript.mailPoints;
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
         firstPersonController.ChangeMailInfo(MailName, MailSpeed);
+        rb = GetComponent<Rigidbody>();
+        Vector3 spinDirection = transform.up;
+        rb.AddTorque(spinDirection * 10f);
+
     }
     private void OnCollisionEnter(Collision collision)
     {

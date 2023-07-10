@@ -19,6 +19,11 @@ public class MailBoxContoller : MonoBehaviour
     public int PlayerScore;
     public TextMeshProUGUI PlayerScoreText;
     FirstPersonController firstPersonController;
+    public GameObject arrowPoint;
+    private Vector3 targetMailBoxPosition;
+    private Transform targetMailBoxTransform;
+    public GameObject player;
+    public PointerScript pointerScript;
     private void Start()
     {
         normalMaterial = Resources.Load<Material>("NormalMailBox");
@@ -59,8 +64,11 @@ public class MailBoxContoller : MonoBehaviour
             mailBoxes[randomNumber].tag = "TargetBlue";
             newMailBoxRenderer.material = lockedBoxBlueMaterial;
         }
-        
-        
+
+        //targetMailBoxPosition = mailBoxes[randomNumber].transform.position;
+
+        targetMailBoxTransform = mailBoxes[randomNumber].transform;
+        pointerScript.UpdateTargetPosition(targetMailBoxTransform);
         GameStarted = true;
     }
     private void RandomMailBoxGenerator()
