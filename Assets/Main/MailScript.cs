@@ -15,6 +15,7 @@ public class MailScript : MonoBehaviour
 
     FirstPersonController firstPersonController;
     private Rigidbody rb;
+    private IEnumerator delayDestroy;
 
     private void Start()
     {
@@ -28,7 +29,17 @@ public class MailScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Vector3 spinDirection = transform.up;
         rb.AddTorque(spinDirection * 10f);
+        delayDestroy = DelayDestroo(3f);
+        StartCoroutine(delayDestroy);
 
+
+
+    }
+    private IEnumerator DelayDestroo(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        mailBoxController.MailHasFailed();
+        Destroy(this.gameObject);
     }
     private void OnCollisionEnter(Collision collision)
     {

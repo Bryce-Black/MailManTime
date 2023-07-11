@@ -7,10 +7,21 @@ public class KeyScript : MonoBehaviour
     MailBoxContoller mailBoxController;
 
     FirstPersonController firstPersonController;
+    private IEnumerator delayDestroy;
     private void Start()
     {
         mailBoxController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
+        delayDestroy = DelayDestroo(3f);
+        StartCoroutine(delayDestroy);
+
+    }
+
+    private IEnumerator DelayDestroo(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        mailBoxController.MailHasFailed();
+        Destroy(this.gameObject);
     }
     private void OnCollisionEnter(Collision collision)
     {
