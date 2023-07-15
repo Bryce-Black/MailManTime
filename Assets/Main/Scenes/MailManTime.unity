@@ -10372,7 +10372,7 @@ MonoBehaviour:
   mailHUD:
   - {fileID: 1366125224}
   - {fileID: 1363140736}
-  - {fileID: 0}
+  - {fileID: 8247897184327090401, guid: 634362a78eb89474689fcb12c4e36bcc, type: 3}
   - {fileID: 1485381544}
   playerCamera: {fileID: 4918451714722057862}
   fov: 60
