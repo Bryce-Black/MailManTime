@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04458f3f77b04eb4fb2ea77b05676c4a, type: 3}
-  m_Name: NormalMail
+  m_Name: MailMail
   m_EditorClassIdentifier: 
-  mailName: Mail
+  mailName: MailMail
   mailMass: 1
   mailSpeed: 500
   mailPoints: 1

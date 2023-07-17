@@ -22,8 +22,6 @@ public class MenuUIManager : MonoBehaviour
         {
             howToPlayPanel.SetActive(true);
         }
-        
-        
     }
 
     public void ToggleCredits()

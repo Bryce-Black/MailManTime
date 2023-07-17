@@ -21,15 +21,28 @@ public class FirstPersonController : MonoBehaviour
     public GameObject mailPrefab;
     private Transform shootingPoint;
     private float letterSpeed = 500f;
-    private string letterNameInResourcesFolder = "Mail";
+    private string letterNameInResourcesFolder = "MailMail";
     private string keyNameInResourceFolder = "Key";
     private bool keyInHand = true;
     public GameObject KeyHUDRoot;
     public GameObject mailHUDRoot;
     public List<GameObject> keyHUD = new List<GameObject>();
     public List<GameObject> mailHUD = new List<GameObject>();
-    private int keyIndex = 0;
     #endregion ShootingVariables
+
+    #region UI
+    public GameObject keySelectHighlight;
+    public List<GameObject> keyUIGameObjects;
+    private Vector3 selectedKeyPositionV3;
+    private int keySelectIndexInt = 0;
+
+    public GameObject mailSelectHighlight;
+    public List<GameObject> mailUIGameObjects;
+    private Vector3 selectedMailPositionV3;
+    private int mailSelectIndexInt = 0;
+
+
+    #endregion UI
     #region Camera Movement Variables
 
     public Camera playerCamera;
@@ -143,8 +156,12 @@ public class FirstPersonController : MonoBehaviour
 
     #endregion
 
+
     private void Awake()
     {
+        selectedKeyPositionV3 = keyUIGameObjects[0].transform.position;
+        selectedMailPositionV3 = mailUIGameObjects[0].transform.position;
+
         rb = GetComponent<Rigidbody>();
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         shootingPoint = playerCamera.transform;
@@ -232,7 +249,7 @@ public class FirstPersonController : MonoBehaviour
         else
         {
             // Instantiate the projectile at the camera's position and rotation
-            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder), transform.position, transform.rotation);
+            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder), transform.position, Quaternion.identity);
             // Get the direction the player is pointing
             Vector3 direction = shootingPoint.forward;
             // Add force to the projectile if it has a Rigidbody component
@@ -247,58 +264,54 @@ public class FirstPersonController : MonoBehaviour
     }
     public void GenerateNewMailType()
     {
-        foreach(GameObject mailHudObject in mailHUD)
-        {
-            mailHudObject.SetActive(false);
-        }
-        int ranNumber;
-        ranNumber = Random.Range(0, 4);
-        if(ranNumber == 0)
-        {
-            letterNameInResourcesFolder = "Mail";
-            mailHUD[0].gameObject.SetActive(true);
-        }
-        if (ranNumber == 1)
-        {
-            letterNameInResourcesFolder = "MetalMail";
-            mailHUD[1].gameObject.SetActive(true);
-
-        }
-        if (ranNumber == 2)
-        {
-            letterNameInResourcesFolder = "FireMail";
-            mailHUD[2].gameObject.SetActive(true);
-        }
-        if (ranNumber == 3)
-        {
-            letterNameInResourcesFolder = "IceMail";
-            mailHUD[3].gameObject.SetActive(true);
-        }
-        Debug.Log("Generate mail rannumb is" + ranNumber + " should activate" + mailHUD[ranNumber].gameObject.name);
+        //foreach(GameObject mailHudObject in mailHUD)
+        //{
+        //    mailHudObject.SetActive(false);
+        //}
+        //int ranNumber;
+        //ranNumber = Random.Range(0, 4);
+        //if(ranNumber == 0)
+        //{
+        //    letterNameInResourcesFolder = "Mail";
+        //}
+        //if (ranNumber == 1)
+        //{
+        //    letterNameInResourcesFolder = "MetalMail";
+        //}
+        //if (ranNumber == 2)
+        //{
+        //    letterNameInResourcesFolder = "FireMail";
+        //}
+        //if (ranNumber == 3)
+        //{
+        //    letterNameInResourcesFolder = "IceMail";
+        //}
+        //Debug.Log("Generate mail rannumb is" + ranNumber + " should activate" + mailHUD[ranNumber].gameObject.name);
         //mailHUD[0].gameObject.SetActive(true);
     }
     private void SwitchProjectile()
     {
         if(keyInHand)
         {
+            keySelectHighlight.gameObject.SetActive(false);
+            mailSelectHighlight.gameObject.SetActive(true);
             keyInHand = false;
-            KeyHUDRoot.gameObject.SetActive(false);
-            mailHUDRoot.gameObject.SetActive(true);
         }
         else
         {
+            Debug.Log("NotKeyInHand");
+            keySelectHighlight.gameObject.SetActive(true);
+            mailSelectHighlight.gameObject.SetActive(false);
             keyInHand = true;
-            KeyHUDRoot.gameObject.SetActive(true);
-            mailHUDRoot.gameObject.SetActive(false);
         }
     }
     private void UpdateKeyName()
     {
-        if(keyIndex == 0)
+        if(keySelectIndexInt == 0)
         {
             keyNameInResourceFolder = "Key";
         }
-        else if(keyIndex == 1)
+        else if(keySelectIndexInt == 1)
         {
             keyNameInResourceFolder = "BlueKey";
         }
@@ -307,45 +320,77 @@ public class FirstPersonController : MonoBehaviour
             keyNameInResourceFolder = "RedKey";
         }
     }
+    private void UpdateMailName()
+    {
+        if (mailSelectIndexInt == 0)
+        {
+            letterNameInResourcesFolder = "MailMail";
+        }
+        else if (mailSelectIndexInt == 1)
+        {
+            letterNameInResourcesFolder = "FireMail";
+        }
+        else if(mailSelectIndexInt == 2)
+        {
+            letterNameInResourcesFolder = "IceMail";
+        }
+        else
+        {
+            letterNameInResourcesFolder = "MetalMail";
+        }
+    }
     private void ScrollUpMethod()
     {
         if(keyInHand)
         {
-            Debug.Log("scrollup keyindex: " + keyIndex);
-            keyIndex -= 1;
-            if (keyIndex == -1)
+            Debug.Log("scrollup keyindex: " + keySelectIndexInt);
+            keySelectIndexInt -= 1;
+            if (keySelectIndexInt == -1)
             {
-                keyIndex = 2;
+                keySelectIndexInt = 2;
             }
-            foreach(GameObject keyHud in keyHUD)
-            {
-                keyHud.gameObject.SetActive(false);
-            }
-            keyHUD[keyIndex].SetActive(true);
+            keySelectHighlight.gameObject.transform.position = keyUIGameObjects[keySelectIndexInt].transform.position;
+
             UpdateKeyName();
+        }
+        else
+        {
+            mailSelectIndexInt -= 1;
+            if(mailSelectIndexInt == -1)
+            {
+                mailSelectIndexInt = 3;
+            }
+            mailSelectHighlight.gameObject.transform.position = mailUIGameObjects[mailSelectIndexInt].transform.position;
+            UpdateMailName();
         }
     }
     private void ScrollDownMethod()
     {
         if(keyInHand)
         {
-            keyIndex += 1;
-            if (keyIndex == 3)
+            keySelectIndexInt += 1;
+            if (keySelectIndexInt == 3)
             {
-                keyIndex = 0;
+                keySelectIndexInt = 0;
             }
-            Debug.Log("scrolldown keyindex: " + keyIndex);
-            foreach (GameObject keyHud in keyHUD)
-            {
-                keyHud.gameObject.SetActive(false);
-            }
-            keyHUD[keyIndex].SetActive(true);
+            keySelectHighlight.gameObject.transform.position = keyUIGameObjects[keySelectIndexInt].transform.position;
+            Debug.Log("scrolldown keyindex: " + keySelectIndexInt);
             UpdateKeyName();
+        }
+        else
+        {
+            mailSelectIndexInt += 1;
+            if (mailSelectIndexInt == 4)
+            {
+                mailSelectIndexInt = 0;
+            }
+            mailSelectHighlight.gameObject.transform.position = mailUIGameObjects[mailSelectIndexInt].transform.position;
+            UpdateMailName();
         }
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             SwitchProjectile();
         }
@@ -359,6 +404,12 @@ public class FirstPersonController : MonoBehaviour
         {
             ScrollDownMethod();
         }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        }
+
+
         #region Camera
 
         // Control camera movement
@@ -386,15 +437,7 @@ public class FirstPersonController : MonoBehaviour
         #region Camera Zoom
 
 
-        #region Shoot
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-        }
 
-        
-
-        #endregion Shoot
 
 
         #endregion
