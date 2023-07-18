@@ -28,6 +28,7 @@ public class FirstPersonController : MonoBehaviour
     public GameObject mailHUDRoot;
     public List<GameObject> keyHUD = new List<GameObject>();
     public List<GameObject> mailHUD = new List<GameObject>();
+    private Vector3 currentVector3;
     #endregion ShootingVariables
 
     #region UI
@@ -229,6 +230,7 @@ public class FirstPersonController : MonoBehaviour
     }
 
     float camRotation;
+
     private void Shoot()
     {
         if(keyInHand)
@@ -249,7 +251,9 @@ public class FirstPersonController : MonoBehaviour
         else
         {
             // Instantiate the projectile at the camera's position and rotation
-            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder), transform.position, Quaternion.identity);
+            currentVector3 = transform.position;
+            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder));
+            projectile.transform.position = currentVector3;
             // Get the direction the player is pointing
             Vector3 direction = shootingPoint.forward;
             // Add force to the projectile if it has a Rigidbody component
