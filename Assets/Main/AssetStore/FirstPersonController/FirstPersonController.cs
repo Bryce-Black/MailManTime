@@ -18,16 +18,11 @@ public class FirstPersonController : MonoBehaviour
 {
     private Rigidbody rb;
     #region ShootingVariables
-    public GameObject mailPrefab;
     private Transform shootingPoint;
     private float letterSpeed = 500f;
     private string letterNameInResourcesFolder = "MailMail";
     private string keyNameInResourceFolder = "Key";
     private bool keyInHand = true;
-    public GameObject KeyHUDRoot;
-    public GameObject mailHUDRoot;
-    public List<GameObject> keyHUD = new List<GameObject>();
-    public List<GameObject> mailHUD = new List<GameObject>();
     private Vector3 currentVector3;
     #endregion ShootingVariables
 

@@ -30,6 +30,11 @@ public class KeyScript : MonoBehaviour
             mailBoxController.MailHasFailed();
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.tag == this.gameObject.tag)
+        {
+            mailBoxController.KeyHasUnlockedBox();
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -11,6 +11,8 @@ TagManager:
   - TargetNormal
   - TargetRed
   - TargetBlue
+  - MailBox
+  - Door
   layers:
   - Default
   - TransparentFX
