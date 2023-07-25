@@ -501,9 +501,14 @@ public class FirstPersonController : MonoBehaviour
         #region Jump
 
         // Gets input and calls jump method
-        if (enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
+        if (enableJump && Input.GetKeyDown(jumpKey))
         {
-            Jump();
+            CheckGround();
+            if(isGrounded)
+            {
+                Jump();
+            }
+            
         }
 
         #endregion
@@ -623,7 +628,7 @@ public class FirstPersonController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = .75f;
+        float distance = 2.75f;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
@@ -634,11 +639,13 @@ public class FirstPersonController : MonoBehaviour
         {
             isGrounded = false;
         }
+        Debug.Log("Is grounded?: " + isGrounded);
     }
 
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
+        
         if (isGrounded)
         {
             rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
