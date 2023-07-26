@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04458f3f77b04eb4fb2ea77b05676c4a, type: 3}
   m_Name: IceMail
   m_EditorClassIdentifier: 
-  mailName: Mail
+  mailName: IceMail
   mailMass: 1
   mailSpeed: 500
   mailPoints: 3
