@@ -159,7 +159,7 @@ public class FirstPersonController : MonoBehaviour
     {
         selectedKeyPositionV3 = keyUIGameObjects[0].transform.position;
         selectedMailPositionV3 = mailUIGameObjects[0].transform.position;
-
+        Application.targetFrameRate = 120;
         rb = GetComponent<Rigidbody>();
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         shootingPoint = playerCamera.transform;
@@ -234,6 +234,7 @@ public class FirstPersonController : MonoBehaviour
         {
             // Instantiate the projectile at the camera's position and rotation
             GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), transform.position, transform.rotation);
+            projectile.transform.Rotate(0, 90, 0, Space.World);
             // Get the direction the player is pointing
             Vector3 direction = shootingPoint.forward;
             // Add force to the projectile if it has a Rigidbody component
@@ -410,6 +411,7 @@ public class FirstPersonController : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
+            Debug.Log("Shoot!");
             Shoot();
         }
 
@@ -628,7 +630,7 @@ public class FirstPersonController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = 2.75f;
+        float distance = 1.75f;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {

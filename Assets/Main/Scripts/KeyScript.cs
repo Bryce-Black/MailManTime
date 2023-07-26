@@ -12,7 +12,7 @@ public class KeyScript : MonoBehaviour
     {
         mailBoxController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
-        delayDestroy = DelayDestroo(3f);
+        delayDestroy = DelayDestroo(1.5f);
         StartCoroutine(delayDestroy);
 
     }
