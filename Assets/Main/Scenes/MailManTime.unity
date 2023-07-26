@@ -1504,7 +1504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673146885}
   m_LocalRotation: {x: 0, y: -0, z: -0.7052593, w: -0.7089495}
-  m_LocalPosition: {x: 23.2, y: 15.96, z: -12.24}
+  m_LocalPosition: {x: 23.2, y: 11.37, z: -12.24}
   m_LocalScale: {x: 1, y: 0.075797, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1912,7 +1912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759015288}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 22.37, y: 0.204, z: 18.75}
+  m_LocalPosition: {x: 22.37, y: 0.204, z: 17.26}
   m_LocalScale: {x: 1, y: 0.075797, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5714,6 +5714,7 @@ GameObject:
   - component: {fileID: 2881883097692206857}
   - component: {fileID: 1286651438068790065}
   - component: {fileID: 7776699643351637838}
+  - component: {fileID: 7776699643351637839}
   m_Layer: 0
   m_Name: Bar_Counter
   m_TagString: Untagged
@@ -16329,6 +16330,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7776699643351637839
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059403486197827009}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.042277295, y: 0.0067750434, z: 0.011033645}
+  m_Center: {x: 0.000000036321577, y: 0.000000004773027, z: 0.0055168215}
 --- !u!4 &7807031585131598838
 Transform:
   m_ObjectHideFlags: 0
