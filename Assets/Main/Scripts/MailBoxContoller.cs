@@ -52,21 +52,8 @@ public class MailBoxContoller : MonoBehaviour
             newMailBox = Instantiate(Resources.Load<GameObject>("MailMailBox"));
             newMailBox.transform.position = mailBoxSpawnLocations[randomNumber].transform.position;
             newMailBox.transform.rotation = mailBoxSpawnLocations[randomNumber].transform.rotation;
-            GameObject mailBoxDoor = GameObject.FindGameObjectWithTag("Door");
-            int ranColorNum = Random.Range(0, 3);
-            if(ranColorNum == 0)
-            {
-                mailBoxDoor.tag = "TargetNormal";
-            }
-            if(ranColorNum == 1)
-            {
-                mailBoxDoor.tag = "TargetRed";
-            }
-            if(ranColorNum ==2)
-            {
-                mailBoxDoor.tag = "TargetBlue";
-            }
-            
+            //SetDoorColorAndTag();
+
 
         }
         else if (ranNum == 1)
@@ -74,20 +61,7 @@ public class MailBoxContoller : MonoBehaviour
             newMailBox = Instantiate(Resources.Load<GameObject>("FireMailBox"));
             newMailBox.transform.position = mailBoxSpawnLocations[randomNumber].transform.position;
             newMailBox.transform.rotation = mailBoxSpawnLocations[randomNumber].transform.rotation;
-            GameObject mailBoxDoor = GameObject.FindGameObjectWithTag("Door");
-            int ranColorNum = Random.Range(0, 3);
-            if (ranColorNum == 0)
-            {
-                mailBoxDoor.tag = "TargetNormal";
-            }
-            if (ranColorNum == 1)
-            {
-                mailBoxDoor.tag = "TargetRed";
-            }
-            if (ranColorNum == 2)
-            {
-                mailBoxDoor.tag = "TargetBlue";
-            }
+            //SetDoorColorAndTag();
 
         }
         else if (ranNum == 2)
@@ -95,20 +69,7 @@ public class MailBoxContoller : MonoBehaviour
             newMailBox = Instantiate(Resources.Load<GameObject>("IceMailBox"));
             newMailBox.transform.position = mailBoxSpawnLocations[randomNumber].transform.position;
             newMailBox.transform.rotation = mailBoxSpawnLocations[randomNumber].transform.rotation;
-            GameObject mailBoxDoor = GameObject.FindGameObjectWithTag("Door");
-            int ranColorNum = Random.Range(0, 3);
-            if (ranColorNum == 0)
-            {
-                mailBoxDoor.tag = "TargetNormal";
-            }
-            if (ranColorNum == 1)
-            {
-                mailBoxDoor.tag = "TargetRed";
-            }
-            if (ranColorNum == 2)
-            {
-                mailBoxDoor.tag = "TargetBlue";
-            }
+            //SetDoorColorAndTag();
 
         }
         else
@@ -116,24 +77,37 @@ public class MailBoxContoller : MonoBehaviour
             newMailBox = Instantiate(Resources.Load<GameObject>("MetalMailBox"));
             newMailBox.transform.position = mailBoxSpawnLocations[randomNumber].transform.position;
             newMailBox.transform.rotation = mailBoxSpawnLocations[randomNumber].transform.rotation;
-            GameObject mailBoxDoor = GameObject.FindGameObjectWithTag("Door");
-            int ranColorNum = Random.Range(0, 3);
-            if (ranColorNum == 0)
-            {
-                mailBoxDoor.tag = "TargetNormal";
-            }
-            if (ranColorNum == 1)
-            {
-                mailBoxDoor.tag = "TargetRed";
-            }
-            if (ranColorNum == 2)
-            {
-                mailBoxDoor.tag = "TargetBlue";
-            }
+            //SetDoorColorAndTag();
 
         }
 
-
+        Debug.Log("MailBox Spawned type is " + newMailBox.name);
+    }
+    private void SetDoorColorAndTag()
+    {
+        GameObject mailBoxDoor = GameObject.FindGameObjectWithTag("Door");
+        MeshRenderer coloredDoorMesh = GameObject.FindGameObjectWithTag("DoorKeyColor").GetComponent<MeshRenderer>();
+        int ranColorNum = Random.Range(0, 3);
+        if (ranColorNum == 0)
+        {
+            mailBoxDoor.tag = "TargetNormal";
+            coloredDoorMesh.material = Resources.Load<Material>("NormalMailDoorMaterial");
+        }
+        if (ranColorNum == 1)
+        {
+            mailBoxDoor.tag = "TargetRed";
+            coloredDoorMesh.material = Resources.Load<Material>("RedDoorMaterial");
+        }
+        if (ranColorNum == 2)
+        {
+            mailBoxDoor.tag = "TargetBlue";
+            coloredDoorMesh.material = Resources.Load<Material>("BlueDoorMaterial");
+        }
+        Debug.Log("MailBox Spawned target color is: " + mailBoxDoor.tag);
+    }
+    public void MailBoxHasFinishedSpawning()
+    {
+        SetDoorColorAndTag();
     }
     private void RandomMailBoxGenerator()
     {
@@ -144,6 +118,7 @@ public class MailBoxContoller : MonoBehaviour
     {
         if(mailBoxUnlocked)
         {
+            Destroy(newMailBox);
             PlayerScore += points;
             Debug.Log("Mail Delivered! Get Points: " + points);
             Debug.Log("Total Points: " + PlayerScore);
@@ -170,6 +145,7 @@ public class MailBoxContoller : MonoBehaviour
     }
     public void KeyHasFailed()
     {
+        Destroy(newMailBox);
         NewMailBoxTarget();
     }
 }

@@ -547,7 +547,7 @@ public class FirstPersonController : MonoBehaviour
         {
             // Calculate how fast we should be moving
             Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            Debug.Log("target velocity?:" + targetVelocity);
+            //Debug.Log("target velocity?:" + targetVelocity);
             if (targetVelocity.x == 0 && targetVelocity.z == 0)
             {
                 //do nothing
@@ -653,7 +653,7 @@ public class FirstPersonController : MonoBehaviour
         {
             isGrounded = false;
         }
-        Debug.Log("Is grounded?: " + isGrounded);
+        //Debug.Log("Is grounded?: " + isGrounded);
     }
 
     private void Jump()

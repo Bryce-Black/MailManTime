@@ -55,12 +55,13 @@ public class MailScript : MonoBehaviour
         if(other.gameObject.tag == "Unlocked")
         {
             mailBoxController.MailHasBeenDelivered(MailPoints);
+            Debug.Log("SCORE! +" + MailPoints);
             Destroy(this.gameObject);
         }
         else
         {
-            mailBoxController.MailHasFailed();
-            Destroy(this.gameObject);
+            //mailBoxController.MailHasFailed();
+            //Destroy(this.gameObject);
         }
     }
 

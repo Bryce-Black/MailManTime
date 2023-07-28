@@ -8,6 +8,7 @@ public class KeyScript : MonoBehaviour
 
     FirstPersonController firstPersonController;
     private IEnumerator delayDestroy;
+    private bool failedKey = false;
     private void Start()
     {
         mailBoxController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
@@ -27,10 +28,11 @@ public class KeyScript : MonoBehaviour
     {
         if (collision.collider.tag == "Boundry")
         {
+            failedKey = true;
             mailBoxController.MailHasFailed();
             Destroy(this.gameObject);
         }
-        if (collision.gameObject.tag == this.gameObject.tag)
+        if (collision.gameObject.tag == this.gameObject.tag && !failedKey)
         {
             mailBoxController.KeyHasUnlockedBox();
             Destroy(this.gameObject);
@@ -39,13 +41,14 @@ public class KeyScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == this.gameObject.tag)
+        if (other.gameObject.tag == this.gameObject.tag && !failedKey)
         {
             mailBoxController.KeyHasUnlockedBox();
             Destroy(this.gameObject);
         }
         else
         {
+            failedKey = true;
             mailBoxController.KeyHasFailed();
             Destroy(this.gameObject);
         }
