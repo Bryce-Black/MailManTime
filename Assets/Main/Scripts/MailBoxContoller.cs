@@ -26,11 +26,29 @@ public class MailBoxContoller : MonoBehaviour
     public PointerScript pointerScript;
     private bool mailBoxUnlocked = false;
     private GameObject newMailBox;
+    private float timerTime = 5f;
+    public TextMeshProUGUI timerTimeText;
+    private IEnumerator timerCountDownCoroutine;
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
         numberOfMailBoxes = mailBoxSpawnLocations.Count;
         NewMailBoxTarget();
+        timerCountDownCoroutine = TimerCountDownCoroutine(timerTime);
+        StartCoroutine(timerCountDownCoroutine);
+    }
+    private IEnumerator TimerCountDownCoroutine(float waitTime)
+    {
+        while(!(timerTime <= 0f))
+        {
+            yield return new WaitForSeconds(timerTime);
+
+            Debug.Log("countdown time: " + timerTime);
+        }
+        if(timerTime <= 0)
+        {
+            Debug.Log("Times UP!!");
+        }
     }
     public void NewMailBoxTarget()
     {
@@ -134,7 +152,7 @@ public class MailBoxContoller : MonoBehaviour
         Debug.Log("Mail Failed! Total Points: " + PlayerScore);
         Destroy(newMailBox);
         NewMailBoxTarget();
-        PlayerScoreText.text = PlayerScore.ToString();
+        PlayerScoreText.text = "SCORE: " + PlayerScore.ToString();
     }
 
     public void KeyHasUnlockedBox()

@@ -242,7 +242,7 @@ public class FirstPersonController : MonoBehaviour
             if (projectileRigidbody != null)
             {
                 //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
-                projectileRigidbody.AddForce(direction * 1000f);
+                projectileRigidbody.AddForce(direction * 2000f);
                 projectileRigidbody.AddForce(Vector3.up * 100f);
             }
         }

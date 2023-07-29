@@ -14,6 +14,10 @@ TagManager:
   - MailBox
   - Door
   - DoorKeyColor
+  - Fire
+  - Normal
+  - Metal
+  - Ice
   layers:
   - Default
   - TransparentFX

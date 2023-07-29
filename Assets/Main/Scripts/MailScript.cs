@@ -29,7 +29,7 @@ public class MailScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Vector3 spinDirection = transform.up;
         rb.AddTorque(spinDirection * 10f);
-        delayDestroy = DelayDestroo(3f);
+        delayDestroy = DelayDestroo(1f);
         StartCoroutine(delayDestroy);
 
 
@@ -52,7 +52,7 @@ public class MailScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Unlocked")
+        if(other.gameObject.tag == this.gameObject.tag)
         {
             mailBoxController.MailHasBeenDelivered(MailPoints);
             Debug.Log("SCORE! +" + MailPoints);
