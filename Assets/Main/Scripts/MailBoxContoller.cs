@@ -6,15 +6,8 @@ public class MailBoxContoller : MonoBehaviour
 {
     public List<GameObject> mailBoxSpawnLocations;
     private int numberOfMailBoxes;
-    private int previousMailBoxIndex;
     private int randomNumber;
-    private int randomBoxColorNumber;
-    private Material normalMaterial;
-    private Material lockedBoxNormalMaterial;
-    private Material lockedBoxRedMaterial;
-    private Material lockedBoxBlueMaterial;
 
-    private Material unlockedMaterial;
     private bool GameStarted = false;
     public int PlayerScore;
     public TextMeshProUGUI PlayerScoreText;
@@ -26,29 +19,51 @@ public class MailBoxContoller : MonoBehaviour
     public PointerScript pointerScript;
     private bool mailBoxUnlocked = false;
     private GameObject newMailBox;
-    private float timerTime = 5f;
-    public TextMeshProUGUI timerTimeText;
+    private float timerInitialTime = 7f;
+    private float timerModifier = 0f;
+    public TextMeshProUGUI timerInitialTimeText;
     private IEnumerator timerCountDownCoroutine;
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
         numberOfMailBoxes = mailBoxSpawnLocations.Count;
         NewMailBoxTarget();
-        timerCountDownCoroutine = TimerCountDownCoroutine(timerTime);
-        StartCoroutine(timerCountDownCoroutine);
+        StartTimerCountDownCoroutine();
     }
     private IEnumerator TimerCountDownCoroutine(float waitTime)
     {
-        while(!(timerTime <= 0f))
+        while(!(timerInitialTime <= 0f))
         {
-            yield return new WaitForSeconds(timerTime);
-
-            Debug.Log("countdown time: " + timerTime);
+            timerInitialTime -= 1f;
+            yield return new WaitForSeconds(waitTime);
+            Debug.Log("countdown timer: " + timerInitialTime);
         }
-        if(timerTime <= 0)
+        if(timerInitialTime <= 0)
         {
             Debug.Log("Times UP!!");
+            DecreaseMailSpawnTime();
+            StartTimerCountDownCoroutine();
         }
+    }
+    private void StartTimerCountDownCoroutine()
+    {
+        if(timerCountDownCoroutine != null)
+        {
+            StopCoroutine(timerCountDownCoroutine);
+        }
+        
+        timerCountDownCoroutine = TimerCountDownCoroutine(1f);
+        StartCoroutine(timerCountDownCoroutine);
+    }
+    private void DecreaseMailSpawnTime()
+    {
+        timerInitialTime = 7f;
+        if(timerModifier >= 4)
+        {
+            timerModifier += 1;
+        }
+        
+        timerInitialTime -= timerModifier;
     }
     public void NewMailBoxTarget()
     {
