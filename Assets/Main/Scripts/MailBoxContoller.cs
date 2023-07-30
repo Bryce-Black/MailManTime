@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 public class MailBoxContoller : MonoBehaviour
 {
     public List<GameObject> mailBoxSpawnLocations;
@@ -34,16 +35,22 @@ public class MailBoxContoller : MonoBehaviour
     {
         while(!(timerInitialTime <= 0f))
         {
-            timerInitialTime -= 1f;
+            timerInitialTime -= .1f;
             yield return new WaitForSeconds(waitTime);
             Debug.Log("countdown timer: " + timerInitialTime);
+            float timerRounder = (float)Math.Round(timerInitialTime, 2);
+            timerInitialTime = timerRounder;
+            timerInitialTimeText.text = "TIME: " + timerInitialTime.ToString();
         }
         if(timerInitialTime <= 0)
         {
+            timerInitialTimeText.text = "KABOOM";
             Debug.Log("Times UP!!");
+            MailHasFailed();
             DecreaseMailSpawnTime();
             StartTimerCountDownCoroutine();
         }
+        
     }
     private void StartTimerCountDownCoroutine()
     {
@@ -52,18 +59,21 @@ public class MailBoxContoller : MonoBehaviour
             StopCoroutine(timerCountDownCoroutine);
         }
         
-        timerCountDownCoroutine = TimerCountDownCoroutine(1f);
+        timerCountDownCoroutine = TimerCountDownCoroutine(.1f);
         StartCoroutine(timerCountDownCoroutine);
     }
     private void DecreaseMailSpawnTime()
     {
         timerInitialTime = 7f;
-        if(timerModifier >= 4)
+        if(timerModifier <= 4)
         {
-            timerModifier += 1;
+            timerModifier += .25f;
         }
         
         timerInitialTime -= timerModifier;
+        float timerRounder = (float)Math.Round(timerInitialTime, 2);
+        timerInitialTime = timerRounder;
+        timerInitialTimeText.text = "TIME: " + timerInitialTime.ToString();
     }
     public void NewMailBoxTarget()
     {
@@ -79,7 +89,7 @@ public class MailBoxContoller : MonoBehaviour
     }
     private void SpawnARandomMailBox()
     {
-        int ranNum = Random.Range(0, 4);
+        int ranNum = UnityEngine.Random.Range(0, 4);
         if (ranNum == 0)
         {
             newMailBox = Instantiate(Resources.Load<GameObject>("MailMailBox"));
@@ -120,7 +130,7 @@ public class MailBoxContoller : MonoBehaviour
     {
         GameObject mailBoxDoor = GameObject.FindGameObjectWithTag("Door");
         MeshRenderer coloredDoorMesh = GameObject.FindGameObjectWithTag("DoorKeyColor").GetComponent<MeshRenderer>();
-        int ranColorNum = Random.Range(0, 3);
+        int ranColorNum = UnityEngine.Random.Range(0, 3);
         if (ranColorNum == 0)
         {
             mailBoxDoor.tag = "TargetNormal";
@@ -144,7 +154,7 @@ public class MailBoxContoller : MonoBehaviour
     }
     private void RandomMailBoxGenerator()
     {
-        randomNumber = Random.Range(0, numberOfMailBoxes);
+        randomNumber = UnityEngine.Random.Range(0, numberOfMailBoxes);
     }
 
     public void MailHasBeenDelivered(int points)
