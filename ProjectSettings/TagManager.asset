@@ -18,6 +18,9 @@ TagManager:
   - Normal
   - Metal
   - Ice
+  - SpeedBoost
+  - JumpBoost
+  - TimeAdd
   layers:
   - Default
   - TransparentFX

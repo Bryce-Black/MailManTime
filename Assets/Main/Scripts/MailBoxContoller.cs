@@ -31,13 +31,17 @@ public class MailBoxContoller : MonoBehaviour
         NewMailBoxTarget();
         StartTimerCountDownCoroutine();
     }
+    public void TimeResetPowerUp()
+    {
+        StartTimerCountDownCoroutine();
+    }
     private IEnumerator TimerCountDownCoroutine(float waitTime)
     {
         while(!(timerInitialTime <= 0f))
         {
             timerInitialTime -= .1f;
             yield return new WaitForSeconds(waitTime);
-            Debug.Log("countdown timer: " + timerInitialTime);
+            //Debug.Log("countdown timer: " + timerInitialTime);
             float timerRounder = (float)Math.Round(timerInitialTime, 2);
             timerInitialTime = timerRounder;
             timerInitialTimeText.text = "TIME: " + timerInitialTime.ToString();
@@ -124,7 +128,7 @@ public class MailBoxContoller : MonoBehaviour
 
         }
 
-        Debug.Log("MailBox Spawned type is " + newMailBox.name);
+        //Debug.Log("MailBox Spawned type is " + newMailBox.name);
     }
     private void SetDoorColorAndTag()
     {
@@ -146,7 +150,7 @@ public class MailBoxContoller : MonoBehaviour
             mailBoxDoor.tag = "TargetBlue";
             coloredDoorMesh.material = Resources.Load<Material>("BlueDoorMaterial");
         }
-        Debug.Log("MailBox Spawned target color is: " + mailBoxDoor.tag);
+        //Debug.Log("MailBox Spawned target color is: " + mailBoxDoor.tag);
     }
     public void MailBoxHasFinishedSpawning()
     {
@@ -167,6 +171,8 @@ public class MailBoxContoller : MonoBehaviour
             Debug.Log("Total Points: " + PlayerScore);
             NewMailBoxTarget();
             PlayerScoreText.text = PlayerScore.ToString();
+            DecreaseMailSpawnTime();
+            StartTimerCountDownCoroutine();
         }
        
     }
