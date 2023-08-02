@@ -24,6 +24,7 @@ public class MailBoxContoller : MonoBehaviour
     private float timerModifier = 0f;
     public TextMeshProUGUI timerInitialTimeText;
     private IEnumerator timerCountDownCoroutine;
+    public TextMeshProUGUI powerUpScreenText;
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
@@ -33,7 +34,7 @@ public class MailBoxContoller : MonoBehaviour
     }
     public void TimeResetPowerUp()
     {
-        StartTimerCountDownCoroutine();
+        timerInitialTime += 5f;
     }
     private IEnumerator TimerCountDownCoroutine(float waitTime)
     {
@@ -56,6 +57,7 @@ public class MailBoxContoller : MonoBehaviour
         }
         
     }
+    
     private void StartTimerCountDownCoroutine()
     {
         if(timerCountDownCoroutine != null)

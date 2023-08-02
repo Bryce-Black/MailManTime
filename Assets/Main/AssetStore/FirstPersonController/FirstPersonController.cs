@@ -127,6 +127,7 @@ public class FirstPersonController : MonoBehaviour
     private bool speedMofiied = false;
     private bool jumpModified = false;
     private MailBoxContoller mbController;
+    public PowerUpController puController;
     #endregion
 
     #region Crouch
@@ -162,7 +163,7 @@ public class FirstPersonController : MonoBehaviour
     {
         selectedKeyPositionV3 = keyUIGameObjects[0].transform.position;
         selectedMailPositionV3 = mailUIGameObjects[0].transform.position;
-        Application.targetFrameRate = 120;
+        
         rb = GetComponent<Rigidbody>();
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         shootingPoint = playerCamera.transform;
@@ -183,7 +184,7 @@ public class FirstPersonController : MonoBehaviour
     void Start()
     {
         mbController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
-
+        Application.targetFrameRate = 120;
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -247,6 +248,8 @@ public class FirstPersonController : MonoBehaviour
                 sprintSpeed *= 2;
                 StartCoroutine(powerUp);
             }
+            Destroy(other.gameObject);
+            //puController.GenerateRandomSpawnLocation();
             
         }
         if (other.gameObject.tag == "JumpBoost")
@@ -263,13 +266,16 @@ public class FirstPersonController : MonoBehaviour
                 powerUp = PowerUp(5f);
                 StartCoroutine(powerUp);
             }
+            Destroy(other.gameObject);
+            //puController.GenerateRandomSpawnLocation();
 
         }
         if (other.gameObject.tag == "TimeAdd")
         {
             Debug.Log("TimeAdd");
             mbController.TimeResetPowerUp();
-
+            Destroy(other.gameObject);
+            puController.GenerateRandomSpawnLocation();
         }
     }
     private IEnumerator PowerUp(float waitTime)
@@ -645,8 +651,7 @@ public class FirstPersonController : MonoBehaviour
                     velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
                     velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
                     velocityChange.y = 0;
-
-                    // Player is only moving when valocity change != 0
+                    // Player is only moving when velocity change != 0
                     // Makes sure fov change only happens during movement
                     if (velocityChange.x != 0 || velocityChange.z != 0)
                     {
@@ -676,8 +681,7 @@ public class FirstPersonController : MonoBehaviour
                     }
 
                     targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
-
-                    // Apply a force that attempts to reach our target velocity
+                    //Apply a force that attempts to reach our target velocity
                     Vector3 velocity = rb.velocity;
                     Vector3 velocityChange = (targetVelocity - velocity);
                     velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
