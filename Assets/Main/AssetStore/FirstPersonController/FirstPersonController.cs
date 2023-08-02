@@ -155,6 +155,7 @@ public class FirstPersonController : MonoBehaviour
     // Internal Variables
     private Vector3 jointOriginalPos;
     private float timer = 0;
+    public float gravityScale = 1f;
 
     #endregion
 
@@ -183,8 +184,10 @@ public class FirstPersonController : MonoBehaviour
 
     void Start()
     {
-        mbController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
         Application.targetFrameRate = 120;
+        Time.fixedDeltaTime = 0.00833f;
+        mbController = GameObject.FindGameObjectWithTag("MailBoxController").GetComponent<MailBoxContoller>();
+        
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -526,7 +529,7 @@ public class FirstPersonController : MonoBehaviour
             if (isSprinting)
             {
                 isZoomed = false;
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
+                //playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
 
                 // Drain sprint remaining while sprinting
                 if (!unlimitedSprint)
@@ -541,12 +544,12 @@ public class FirstPersonController : MonoBehaviour
             }
             else
             {
-                // Regain sprint while not sprinting
+                //Regain sprint while not sprinting
                 sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, sprintDuration);
             }
 
-            // Handles sprint cooldown 
-            // When sprint remaining == 0 stops sprint ability until hitting cooldown
+            //Handles sprint cooldown
+            //When sprint remaining == 0 stops sprint ability until hitting cooldown
             if (isSprintCooldown)
             {
                 sprintCooldown -= 1 * Time.deltaTime;
@@ -618,18 +621,18 @@ public class FirstPersonController : MonoBehaviour
             // Calculate how fast we should be moving
             Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             //Debug.Log("target velocity?:" + targetVelocity);
+            rb.AddForce(Vector3.down * gravityScale);
+
             if (targetVelocity.x == 0 && targetVelocity.z == 0)
             {
                 //do nothing
             }
             else
             {
+
                 ////If we want to adjust air manipulation
-                //CheckGround();
-                //if(isGrounded)
-                //{
-                    
-                //}
+                
+
                 if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
                 {
                     isWalking = true;
@@ -664,7 +667,7 @@ public class FirstPersonController : MonoBehaviour
 
                         if (hideBarWhenFull && !unlimitedSprint)
                         {
-                            sprintBarCG.alpha += 5 * Time.deltaTime;
+                            //sprintBarCG.alpha += 5 * Time.deltaTime;
                         }
                     }
 
@@ -677,7 +680,7 @@ public class FirstPersonController : MonoBehaviour
 
                     if (hideBarWhenFull && sprintRemaining == sprintDuration)
                     {
-                        sprintBarCG.alpha -= 3 * Time.deltaTime;
+                        //sprintBarCG.alpha -= 3 * Time.deltaTime;
                     }
 
                     targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
@@ -712,7 +715,7 @@ public class FirstPersonController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = 1.75f;
+        float distance = .45f;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
@@ -723,7 +726,7 @@ public class FirstPersonController : MonoBehaviour
         {
             isGrounded = false;
         }
-        //Debug.Log("Is grounded?: " + isGrounded);
+        Debug.Log("Is grounded?: " + isGrounded);
     }
 
     private void Jump()

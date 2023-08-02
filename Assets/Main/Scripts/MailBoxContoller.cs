@@ -190,6 +190,10 @@ public class MailBoxContoller : MonoBehaviour
 
     public void KeyHasUnlockedBox()
     {
+        if(timerInitialTime > 0)
+        {
+            timerInitialTime += 5f;
+        }
         mailBoxUnlocked = true;
         Animator doorOpen = GameObject.FindGameObjectWithTag("MailBox").GetComponent<Animator>();
         doorOpen.SetTrigger("MailBoxOpen");
