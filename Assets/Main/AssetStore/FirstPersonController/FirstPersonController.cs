@@ -18,6 +18,7 @@ public class FirstPersonController : MonoBehaviour
 {
     private Rigidbody rb;
     #region ShootingVariables
+    public GameObject shootLocation;
     private Transform shootingPoint;
     private float letterSpeed = 5000f;
     private string letterNameInResourcesFolder = "MailMail";
@@ -37,12 +38,11 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 selectedMailPositionV3;
     private int mailSelectIndexInt = 0;
 
-
     #endregion UI
     #region Camera Movement Variables
 
     public Camera playerCamera;
-
+    
     public float fov = 60f;
     public bool invertCamera = false;
     public bool cameraCanMove = true;
@@ -306,7 +306,7 @@ public class FirstPersonController : MonoBehaviour
         if(keyInHand)
         {
             // Instantiate the projectile at the camera's position and rotation
-            GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), transform.position, transform.rotation);
+            GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), shootLocation.transform.position, shootLocation.transform.rotation);
             projectile.transform.Rotate(0, 90, 0, Space.World);
             // Get the direction the player is pointing
             Vector3 direction = shootingPoint.forward;
@@ -315,15 +315,15 @@ public class FirstPersonController : MonoBehaviour
             if (projectileRigidbody != null)
             {
                 //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
-                projectileRigidbody.AddForce(direction * 2500f);
+                projectileRigidbody.AddForce(direction * 5500f);
                 projectileRigidbody.AddForce(Vector3.up * 100f);
             }
         }
         else
         {
             // Instantiate the projectile at the camera's position and rotation
-            currentVector3 = transform.position;
-            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder));
+            currentVector3 = shootLocation.transform.position;
+            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder), shootLocation.transform.position, shootLocation.transform.rotation);
             projectile.transform.position = currentVector3;
             projectile.transform.Rotate(xRotation, yRotation, zRotation, Space.World);
             // Get the direction the player is pointing
@@ -487,8 +487,6 @@ public class FirstPersonController : MonoBehaviour
             Debug.Log("Shoot!");
             Shoot();
         }
-
-
         #region Camera
 
         // Control camera movement
