@@ -280,6 +280,11 @@ public class FirstPersonController : MonoBehaviour
             Destroy(other.gameObject);
             puController.GenerateRandomSpawnLocation();
         }
+        if (other.gameObject.tag == "LaunchPad")
+        {
+            Debug.Log("LaunchPad");
+            rb.AddForce(Vector3.up * 8000f);
+        }
     }
     private IEnumerator PowerUp(float waitTime)
     {

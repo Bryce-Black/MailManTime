@@ -21,6 +21,7 @@ TagManager:
   - SpeedBoost
   - JumpBoost
   - TimeAdd
+  - LaunchPad
   layers:
   - Default
   - TransparentFX

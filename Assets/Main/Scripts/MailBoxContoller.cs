@@ -20,17 +20,25 @@ public class MailBoxContoller : MonoBehaviour
     public PointerScript pointerScript;
     private bool mailBoxUnlocked = false;
     private GameObject newMailBox;
-    private float timerInitialTime = 7f;
+    private float timerInitialTime = 10f;
     private float timerModifier = 0f;
     public TextMeshProUGUI timerInitialTimeText;
     private IEnumerator timerCountDownCoroutine;
     public TextMeshProUGUI powerUpScreenText;
+    private IEnumerator mailBoxTester;
+    private int MailBoxTesterIndex;
+
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
         numberOfMailBoxes = mailBoxSpawnLocations.Count;
-        NewMailBoxTarget();
-        StartTimerCountDownCoroutine();
+        MailBoxTesterIndex = numberOfMailBoxes -1;
+        Debug.Log("Mailboxtesterindex: " + MailBoxTesterIndex);
+        NewTestMailboxLocation();
+        mailBoxTester = MailBoxTester(3f);
+        StartCoroutine(mailBoxTester);
+        //NewMailBoxTarget();
+        //StartTimerCountDownCoroutine();
     }
     public void TimeResetPowerUp()
     {
@@ -55,9 +63,42 @@ public class MailBoxContoller : MonoBehaviour
             DecreaseMailSpawnTime();
             StartTimerCountDownCoroutine();
         }
+    }
+    private void NewTestMailboxLocation()
+    {
+        newMailBox = Instantiate(Resources.Load<GameObject>("MailMailBox"));
+        newMailBox.transform.position = mailBoxSpawnLocations[MailBoxTesterIndex].transform.position;
+        newMailBox.transform.rotation = mailBoxSpawnLocations[MailBoxTesterIndex].transform.rotation;
+        targetMailBoxTransform = mailBoxSpawnLocations[MailBoxTesterIndex].transform;
+        pointerScript.UpdateTargetPosition(targetMailBoxTransform);
+    }
+
+    private IEnumerator MailBoxTester(float waitTime)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(waitTime);
+            if (newMailBox != null)
+            {
+                Destroy(newMailBox);
+            }
+            newMailBox = Instantiate(Resources.Load<GameObject>("MailMailBox"));
+            newMailBox.transform.position = mailBoxSpawnLocations[MailBoxTesterIndex].transform.position;
+            newMailBox.transform.rotation = mailBoxSpawnLocations[MailBoxTesterIndex].transform.rotation;
+
+            targetMailBoxTransform = mailBoxSpawnLocations[MailBoxTesterIndex].transform;
+            pointerScript.UpdateTargetPosition(targetMailBoxTransform);
+            Debug.Log("current test mailbox index is: " + MailBoxTesterIndex);
+            MailBoxTesterIndex -= 1;
+            if (MailBoxTesterIndex == -1)
+            {
+                MailBoxTesterIndex = mailBoxSpawnLocations.Count - 1;
+            }
+        }
+        
         
     }
-    
+
     private void StartTimerCountDownCoroutine()
     {
         if(timerCountDownCoroutine != null)
@@ -172,7 +213,7 @@ public class MailBoxContoller : MonoBehaviour
             Debug.Log("Mail Delivered! Get Points: " + points);
             Debug.Log("Total Points: " + PlayerScore);
             NewMailBoxTarget();
-            PlayerScoreText.text = PlayerScore.ToString();
+            PlayerScoreText.text = "SCORE: " + PlayerScore.ToString() + "/100";
             DecreaseMailSpawnTime();
             StartTimerCountDownCoroutine();
         }
@@ -185,7 +226,7 @@ public class MailBoxContoller : MonoBehaviour
         Debug.Log("Mail Failed! Total Points: " + PlayerScore);
         Destroy(newMailBox);
         NewMailBoxTarget();
-        PlayerScoreText.text = "SCORE: " + PlayerScore.ToString();
+        PlayerScoreText.text = "SCORE: " + PlayerScore.ToString() + "/100";
     }
 
     public void KeyHasUnlockedBox()
