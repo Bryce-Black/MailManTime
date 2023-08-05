@@ -16802,7 +16802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685056969}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 28.67, y: 1.55, z: -0.46867}
+  m_LocalPosition: {x: 30.42, y: 1.55, z: -0.46867}
   m_LocalScale: {x: 5.9113464, y: 1, z: 7.1008406}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17762,8 +17762,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057869740}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 8.53, y: -3.8376, z: 21.62}
-  m_LocalScale: {x: 4.6451316, y: 1, z: 8.4903145}
+  m_LocalPosition: {x: 8.53, y: -8.6808, z: 23.77}
+  m_LocalScale: {x: 4.6451316, y: 0.48087, z: 7.5215697}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 325808625}
@@ -18099,7 +18099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161982277}
   m_LocalRotation: {x: -1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: 9.2, y: 31.25, z: -0.49867}
+  m_LocalPosition: {x: 9.2, y: 35.52, z: -0.49867}
   m_LocalScale: {x: 4.8149877, y: 3.8196, z: 6.8351746}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18939,14 +18939,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1373264658}
-  m_LocalRotation: {x: 0.008725904, y: 0.999962, z: -0, w: 0}
+  m_LocalRotation: {x: -0.9999976, y: -0.0021930318, z: -0, w: 0}
   m_LocalPosition: {x: -17.31, y: 35.45, z: 11.167041}
   m_LocalScale: {x: 1, y: 0.075797, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892665080}
   m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 1801}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 1619.749}
 --- !u!65 &1373264660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31071,7 +31071,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142229194}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -9.52, y: 1.37, z: -0.46867}
+  m_LocalPosition: {x: -10.68, y: 1.37, z: -0.46867}
   m_LocalScale: {x: 5.5263476, y: 1, z: 6.262505}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -38597,7 +38597,7 @@ MonoBehaviour:
   invertCamera: 0
   cameraCanMove: 1
   mouseSensitivity: 2
-  maxLookAngle: 50
+  maxLookAngle: 100
   lockCursor: 1
   crosshair: 1
   crosshairImage: {fileID: 21300000, guid: be4ce60e2c9768c44b9b10b9c5258045, type: 3}

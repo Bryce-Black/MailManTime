@@ -34,11 +34,13 @@ public class MailBoxContoller : MonoBehaviour
         numberOfMailBoxes = mailBoxSpawnLocations.Count;
         MailBoxTesterIndex = numberOfMailBoxes -1;
         Debug.Log("Mailboxtesterindex: " + MailBoxTesterIndex);
-        NewTestMailboxLocation();
-        mailBoxTester = MailBoxTester(3f);
-        StartCoroutine(mailBoxTester);
-        //NewMailBoxTarget();
-        //StartTimerCountDownCoroutine();
+
+        ////this is for testing all spawn locations
+        //NewTestMailboxLocation();
+        //mailBoxTester = MailBoxTester(3f);
+        //StartCoroutine(mailBoxTester);
+        NewMailBoxTarget();
+        StartTimerCountDownCoroutine();
     }
     public void TimeResetPowerUp()
     {
