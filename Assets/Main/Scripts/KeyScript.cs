@@ -21,7 +21,7 @@ public class KeyScript : MonoBehaviour
     private IEnumerator DelayDestroo(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        mailBoxController.MailHasFailed();
+        //mailBoxController.MailHasFailed();
         Destroy(this.gameObject);
     }
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +29,7 @@ public class KeyScript : MonoBehaviour
         if (collision.collider.tag == "Boundry")
         {
             failedKey = true;
-            mailBoxController.MailHasFailed();
+            //mailBoxController.MailHasFailed();
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == this.gameObject.tag && !failedKey)

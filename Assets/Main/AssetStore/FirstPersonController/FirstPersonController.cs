@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 #if UNITY_EDITOR
     using UnityEditor;
@@ -16,6 +17,9 @@ using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
+    public Animator poofAnimation;
+    public TextMeshProUGUI screenInfoText;
+    public Animator scrennInfoAnim;
     private Rigidbody rb;
     #region ShootingVariables
     public GameObject shootLocation;
@@ -238,6 +242,8 @@ public class FirstPersonController : MonoBehaviour
     {
         if (other.gameObject.tag == "SpeedBoost")
         {
+            screenInfoText.text = "Speed Boost! 5 Seconds";
+            scrennInfoAnim.SetTrigger("ScreenInfoTrigger");
             Debug.Log("Speedboost");
             if(powerUp != null)
             {
@@ -257,6 +263,8 @@ public class FirstPersonController : MonoBehaviour
         }
         if (other.gameObject.tag == "JumpBoost")
         {
+            screenInfoText.text = "Jump Boost! 5 Seconds";
+            scrennInfoAnim.SetTrigger("ScreenInfoTrigger");
             Debug.Log("JumpBoost");
             if (powerUp != null)
             {
@@ -275,6 +283,8 @@ public class FirstPersonController : MonoBehaviour
         }
         if (other.gameObject.tag == "TimeAdd")
         {
+            screenInfoText.text = "+5 Seconds!";
+            scrennInfoAnim.SetTrigger("ScreenInfoTrigger");
             Debug.Log("TimeAdd");
             mbController.TimeResetPowerUp();
             Destroy(other.gameObject);
@@ -283,7 +293,7 @@ public class FirstPersonController : MonoBehaviour
         if (other.gameObject.tag == "LaunchPad")
         {
             Debug.Log("LaunchPad");
-            rb.AddForce(Vector3.up * 8000f);
+            rb.AddForce(Vector3.up * 5000f);
         }
     }
     private IEnumerator PowerUp(float waitTime)
@@ -308,7 +318,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void Shoot()
     {
-        if(keyInHand)
+        poofAnimation.SetTrigger("Shoot");
+        if (keyInHand)
         {
             // Instantiate the projectile at the camera's position and rotation
             GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), shootLocation.transform.position, shootLocation.transform.rotation);

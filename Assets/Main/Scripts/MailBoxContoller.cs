@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 public class MailBoxContoller : MonoBehaviour
 {
     public List<GameObject> mailBoxSpawnLocations;
@@ -20,21 +21,22 @@ public class MailBoxContoller : MonoBehaviour
     public PointerScript pointerScript;
     private bool mailBoxUnlocked = false;
     private GameObject newMailBox;
-    private float timerInitialTime = 10f;
+    private float timerInitialTime = 20f;
     private float timerModifier = 0f;
     public TextMeshProUGUI timerInitialTimeText;
     private IEnumerator timerCountDownCoroutine;
     public TextMeshProUGUI powerUpScreenText;
     private IEnumerator mailBoxTester;
     private int MailBoxTesterIndex;
-
+    public List<GameObject> playerHealthHearts;
+    private int playerHealthIndex;
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
         numberOfMailBoxes = mailBoxSpawnLocations.Count;
         MailBoxTesterIndex = numberOfMailBoxes -1;
         Debug.Log("Mailboxtesterindex: " + MailBoxTesterIndex);
-
+        playerHealthIndex = playerHealthHearts.Count - 1;
         ////this is for testing all spawn locations
         //NewTestMailboxLocation();
         //mailBoxTester = MailBoxTester(3f);
@@ -113,7 +115,7 @@ public class MailBoxContoller : MonoBehaviour
     }
     private void DecreaseMailSpawnTime()
     {
-        timerInitialTime = 7f;
+        timerInitialTime = 20f;
         if(timerModifier <= 4)
         {
             timerModifier += .25f;
@@ -229,8 +231,22 @@ public class MailBoxContoller : MonoBehaviour
         Destroy(newMailBox);
         NewMailBoxTarget();
         PlayerScoreText.text = "SCORE: " + PlayerScore.ToString() + "/100";
+        LoseOneHealthPoint();
     }
-
+    private void LoseOneHealthPoint()
+    {
+        playerHealthHearts[playerHealthIndex].SetActive(false);
+        playerHealthIndex -= 1;
+        if(playerHealthIndex == 0)
+        {
+            GameOver();
+        }
+        
+    }
+    private void GameOver()
+    {
+        SceneManager.LoadScene("MailManTime");
+    }
     public void KeyHasUnlockedBox()
     {
         if(timerInitialTime > 0)
