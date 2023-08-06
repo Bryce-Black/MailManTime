@@ -293,6 +293,7 @@ public class FirstPersonController : MonoBehaviour
         if (other.gameObject.tag == "LaunchPad")
         {
             Debug.Log("LaunchPad");
+            rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.up * 5000f);
         }
     }
