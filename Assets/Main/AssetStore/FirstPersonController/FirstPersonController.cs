@@ -126,7 +126,7 @@ public class FirstPersonController : MonoBehaviour
     public float jumpPower = 5f;
 
     // Internal Variables
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     private IEnumerator powerUp;
     private bool speedMofiied = false;
     private bool jumpModified = false;
@@ -247,7 +247,7 @@ public class FirstPersonController : MonoBehaviour
     {
         if (other.gameObject.tag == "SpeedBoost")
         {
-            screenInfoText.text = "Speed Boost! 5 Seconds";
+            screenInfoText.text = "Speed Boost! 10 Seconds";
             scrennInfoAnim.SetTrigger("ScreenInfoTrigger");
             Debug.Log("Speedboost");
             if(powerUp != null)
@@ -257,7 +257,7 @@ public class FirstPersonController : MonoBehaviour
             else
             {
                 speedMofiied = true;
-                powerUp = PowerUp(5f);
+                powerUp = PowerUp(10f);
                 walkSpeed *= 2;
                 sprintSpeed *= 2;
                 StartCoroutine(powerUp);
@@ -268,7 +268,7 @@ public class FirstPersonController : MonoBehaviour
         }
         if (other.gameObject.tag == "JumpBoost")
         {
-            screenInfoText.text = "Jump Boost! 5 Seconds";
+            screenInfoText.text = "Jump Boost! 10 Seconds";
             scrennInfoAnim.SetTrigger("ScreenInfoTrigger");
             Debug.Log("JumpBoost");
             if (powerUp != null)
@@ -279,7 +279,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 jumpModified = true;
                 jumpPower *= 2;
-                powerUp = PowerUp(5f);
+                powerUp = PowerUp(10f);
                 StartCoroutine(powerUp);
             }
             Destroy(other.gameObject);
@@ -324,43 +324,48 @@ public class FirstPersonController : MonoBehaviour
 
     private void Shoot()
     {
-        poofAnimation.SetTrigger("Shoot");
-        if (keyInHand)
+        
+        if(!mbController.gameIsPaused)
         {
-            // Instantiate the projectile at the camera's position and rotation
-            GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), shootLocation.transform.position, shootLocation.transform.rotation);
-            projectile.transform.Rotate(0, 90, 0, Space.World);
-            // Get the direction the player is pointing
-            Vector3 direction = shootingPoint.forward;
-            // Add force to the projectile if it has a Rigidbody component
-            Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
-            if (projectileRigidbody != null)
+            poofAnimation.SetTrigger("Shoot");
+            if (keyInHand)
             {
-                //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
-                projectileRigidbody.AddForce(direction * 5500f);
-                projectileRigidbody.AddForce(Vector3.up * 100f);
+                // Instantiate the projectile at the camera's position and rotation
+                GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), shootLocation.transform.position, shootLocation.transform.rotation);
+                projectile.transform.Rotate(0, 90, 0, Space.World);
+                // Get the direction the player is pointing
+                Vector3 direction = shootingPoint.forward;
+                // Add force to the projectile if it has a Rigidbody component
+                Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
+                if (projectileRigidbody != null)
+                {
+                    //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
+                    projectileRigidbody.AddForce(direction * 5500f);
+                    projectileRigidbody.AddForce(Vector3.up * 100f);
+                }
+            }
+            else
+            {
+                // Instantiate the projectile at the camera's position and rotation
+                currentVector3 = shootLocation.transform.position;
+                GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder), shootLocation.transform.position, shootLocation.transform.rotation);
+                projectile.transform.position = currentVector3;
+                projectile.transform.Rotate(xRotation, yRotation, zRotation, Space.World);
+                // Get the direction the player is pointing
+                Vector3 direction = shootingPoint.forward;
+                // Add force to the projectile if it has a Rigidbody component
+                Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
+                if (projectileRigidbody != null)
+                {
+                    //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
+                    projectileRigidbody.AddForce(direction * letterSpeed);
+                    projectileRigidbody.AddForce(Vector3.up * 100f);
+                    float turn = Input.GetAxis("Horizontal");
+                    projectileRigidbody.AddTorque(5000f * turn * projectileRigidbody.transform.right);
+                }
             }
         }
-        else
-        {
-            // Instantiate the projectile at the camera's position and rotation
-            currentVector3 = shootLocation.transform.position;
-            GameObject projectile = Instantiate(Resources.Load<GameObject>(letterNameInResourcesFolder), shootLocation.transform.position, shootLocation.transform.rotation);
-            projectile.transform.position = currentVector3;
-            projectile.transform.Rotate(xRotation, yRotation, zRotation, Space.World);
-            // Get the direction the player is pointing
-            Vector3 direction = shootingPoint.forward;
-            // Add force to the projectile if it has a Rigidbody component
-            Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
-            if (projectileRigidbody != null)
-            {
-                //Debug.Log("direction is x:" + direction.x + "y:" + direction.y + "z: " + direction.z);
-                projectileRigidbody.AddForce(direction * letterSpeed);
-                projectileRigidbody.AddForce(Vector3.up * 100f);
-                float turn = Input.GetAxis("Horizontal");
-                projectileRigidbody.AddTorque(5000f * turn * projectileRigidbody.transform.right);
-            }
-        }
+        
     }
     public void GenerateNewMailType()
     {
@@ -506,13 +511,12 @@ public class FirstPersonController : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            Debug.Log("Shoot!");
             Shoot();
         }
         #region Camera
 
         // Control camera movement
-        if (cameraCanMove)
+        if (cameraCanMove && !mbController.gameIsPaused)
         {
             yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
@@ -731,7 +735,7 @@ public class FirstPersonController : MonoBehaviour
         keyNameInResourceFolder = newKeyName;
     }
     // Sets isGrounded based on a raycast sent straigth down from the player object
-    private void CheckGround()
+    public void CheckGround()
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);

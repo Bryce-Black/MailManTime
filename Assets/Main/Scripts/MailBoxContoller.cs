@@ -35,6 +35,10 @@ public class MailBoxContoller : MonoBehaviour
     public GameObject youWinPanel;
     public TextMeshProUGUI totalTimeText;
     private bool gameOver = false;
+    public GameObject optionsPanel;
+    public bool gameIsPaused = false;
+    public GameObject reticle;
+    public AudioSource music;
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
@@ -56,7 +60,32 @@ public class MailBoxContoller : MonoBehaviour
             totalTime += Time.deltaTime;
 
         }
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleOptionsMenu();
+        }
+
+    }
+    private void ToggleOptionsMenu()
+    {
+        if(optionsPanel.activeSelf == true)
+        {
+            optionsPanel.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1f;
+            gameIsPaused = false;
+            reticle.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            optionsPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            gameIsPaused = true;
+            reticle.SetActive(false);
+        }
     }
     public void TimeResetPowerUp()
     {
@@ -148,8 +177,7 @@ public class MailBoxContoller : MonoBehaviour
         }
         RandomMailBoxGenerator();
         SpawnARandomMailBox();
-        targetMailBoxTransform = mailBoxSpawnLocations[randomNumber].transform;
-        pointerScript.UpdateTargetPosition(targetMailBoxTransform);
+        
         GameStarted = true;
     }
     private void SpawnARandomMailBox()
@@ -211,6 +239,8 @@ public class MailBoxContoller : MonoBehaviour
             mailBoxDoor.tag = "TargetBlue";
             coloredDoorMesh.material = Resources.Load<Material>("BlueDoorMaterial");
         }
+        targetMailBoxTransform = mailBoxDoor.transform;
+        pointerScript.UpdateTargetPosition(targetMailBoxTransform);
         //Debug.Log("MailBox Spawned target color is: " + mailBoxDoor.tag);
     }
     public void MailBoxHasFinishedSpawning()
@@ -222,13 +252,27 @@ public class MailBoxContoller : MonoBehaviour
         randomNumber = UnityEngine.Random.Range(0, numberOfMailBoxes);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     public void MailHasBeenDelivered(int points)
     {
         if(mailBoxUnlocked)
         {
             Destroy(newMailBox);
-            firstPersonController.ScreenInfoActivate("+" + points);
-            PlayerScore += points +50;
+            firstPersonController.CheckGround();
+            if(!firstPersonController.isGrounded)
+            {
+                PlayerScore += points*2;
+                firstPersonController.ScreenInfoActivate("+" + points*2 + " MID-AIR BONUS! X2");
+            }
+            else
+            {
+                PlayerScore += points;
+                firstPersonController.ScreenInfoActivate("+" + points);
+            }
+            
             if(PlayerScore >= 100)
             {
                 YouWin();
@@ -254,12 +298,25 @@ public class MailBoxContoller : MonoBehaviour
         totalTimeText.text = totalTime.ToString();
 
     }
+    public void ToggleMusic()
+    {
+        if(music.enabled == true)
+        {
+            music.enabled = false;
+        }
+        else
+        {
+            music.enabled = true;
+        }
+    }
     public void RestartGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MailManTime");
     }
     public void LoadMainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
 
     }
@@ -295,6 +352,7 @@ public class MailBoxContoller : MonoBehaviour
         {
             timerInitialTime += 5f;
         }
+        firstPersonController.ScreenInfoActivate("+5 Seconds!");
         mailBoxUnlocked = true;
         Animator doorOpen = GameObject.FindGameObjectWithTag("MailBox").GetComponent<Animator>();
         doorOpen.SetTrigger("MailBoxOpen");
