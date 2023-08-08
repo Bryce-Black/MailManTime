@@ -30,6 +30,11 @@ public class MailBoxContoller : MonoBehaviour
     private int MailBoxTesterIndex;
     public List<GameObject> playerHealthHearts;
     private int playerHealthIndex;
+    public Animator damageAnim;
+    private float totalTime;
+    public GameObject youWinPanel;
+    public TextMeshProUGUI totalTimeText;
+    private bool gameOver = false;
     private void Start()
     {
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
@@ -43,6 +48,15 @@ public class MailBoxContoller : MonoBehaviour
         //StartCoroutine(mailBoxTester);
         NewMailBoxTarget();
         StartTimerCountDownCoroutine();
+    }
+    private void Update()
+    {
+        if(!gameOver)
+        {
+            totalTime += Time.deltaTime;
+
+        }
+        
     }
     public void TimeResetPowerUp()
     {
@@ -213,7 +227,12 @@ public class MailBoxContoller : MonoBehaviour
         if(mailBoxUnlocked)
         {
             Destroy(newMailBox);
-            PlayerScore += points;
+            firstPersonController.ScreenInfoActivate("+" + points);
+            PlayerScore += points +50;
+            if(PlayerScore >= 100)
+            {
+                YouWin();
+            }
             Debug.Log("Mail Delivered! Get Points: " + points);
             Debug.Log("Total Points: " + PlayerScore);
             NewMailBoxTarget();
@@ -223,9 +242,32 @@ public class MailBoxContoller : MonoBehaviour
         }
        
     }
+    private void YouWin()
+    {
+        firstPersonController.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        gameOver = true;
+        youWinPanel.SetActive(true);
+        float roundedTime = (float)Math.Round(totalTime, 2);
+        totalTime = roundedTime;
+        totalTimeText.text = totalTime.ToString();
+
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("MailManTime");
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+
+    }
 
     public void MailHasFailed()
     {
+        damageAnim.SetTrigger("Damaged");
+        firstPersonController.ScreenInfoActivate("-1 HP");
         PlayerScore -= 1;
         Debug.Log("Mail Failed! Total Points: " + PlayerScore);
         Destroy(newMailBox);
@@ -237,7 +279,7 @@ public class MailBoxContoller : MonoBehaviour
     {
         playerHealthHearts[playerHealthIndex].SetActive(false);
         playerHealthIndex -= 1;
-        if(playerHealthIndex == 0)
+        if(playerHealthIndex == -1)
         {
             GameOver();
         }

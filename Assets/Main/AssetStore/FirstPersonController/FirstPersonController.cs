@@ -238,6 +238,11 @@ public class FirstPersonController : MonoBehaviour
 
         #endregion
     }
+    public void ScreenInfoActivate(string infoText)
+    {
+        screenInfoText.text = infoText;
+        scrennInfoAnim.SetTrigger("ScreenInfoTrigger");
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "SpeedBoost")
