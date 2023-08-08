@@ -52,7 +52,8 @@ public class FirstPersonController : MonoBehaviour
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 50f;
-
+    public float maxLookAngleLower = 50f;
+    public float maxLookAngleHigher = 50f;
     // Crosshair
     public bool lockCursor = true;
     public bool crosshair = true;
@@ -533,7 +534,7 @@ public class FirstPersonController : MonoBehaviour
             }
 
             // Clamp pitch between lookAngle
-            pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+            pitch = Mathf.Clamp(pitch, -maxLookAngleLower, maxLookAngleHigher);
 
             Ray ray = new Ray(shootLocation.transform.position, shootLocation.transform.forward);
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
