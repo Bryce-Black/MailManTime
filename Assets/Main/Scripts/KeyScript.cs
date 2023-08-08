@@ -22,6 +22,7 @@ public class KeyScript : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         //mailBoxController.MailHasFailed();
+        firstPersonController.ScreenInfoActivate("Miss!");
         Destroy(this.gameObject);
     }
     private void OnCollisionEnter(Collision collision)
@@ -30,6 +31,7 @@ public class KeyScript : MonoBehaviour
         {
             failedKey = true;
             //mailBoxController.MailHasFailed();
+            firstPersonController.ScreenInfoActivate("Miss!");
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == this.gameObject.tag && !failedKey)

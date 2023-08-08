@@ -330,11 +330,13 @@ public class FirstPersonController : MonoBehaviour
             poofAnimation.SetTrigger("Shoot");
             if (keyInHand)
             {
+
                 // Instantiate the projectile at the camera's position and rotation
                 GameObject projectile = Instantiate(Resources.Load<GameObject>(keyNameInResourceFolder), shootLocation.transform.position, shootLocation.transform.rotation);
                 projectile.transform.Rotate(0, 90, 0, Space.World);
                 // Get the direction the player is pointing
                 Vector3 direction = shootingPoint.forward;
+                
                 // Add force to the projectile if it has a Rigidbody component
                 Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
                 if (projectileRigidbody != null)
@@ -533,6 +535,8 @@ public class FirstPersonController : MonoBehaviour
             // Clamp pitch between lookAngle
             pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
+            Ray ray = new Ray(shootLocation.transform.position, shootLocation.transform.forward);
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
             transform.localEulerAngles = new Vector3(0, yaw, 0);
             playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
         }
