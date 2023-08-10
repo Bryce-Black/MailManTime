@@ -17,6 +17,7 @@ using TMPro;
 
 public class FirstPersonController : MonoBehaviour
 {
+    public GameObject reticle;
     public Animator poofAnimation;
     public TextMeshProUGUI screenInfoText;
     public Animator scrennInfoAnim;
@@ -161,6 +162,8 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 jointOriginalPos;
     private float timer = 0;
     public float gravityScale = 1f;
+
+    private bool clippingControl = false;
 
     #endregion
 
@@ -536,14 +539,54 @@ public class FirstPersonController : MonoBehaviour
             // Clamp pitch between lookAngle
             pitch = Mathf.Clamp(pitch, -maxLookAngleLower, maxLookAngleHigher);
 
-            Ray ray = new Ray(shootLocation.transform.position, shootLocation.transform.forward);
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+            //Ray shootRay = new Ray(shootLocation.transform.position, shootLocation.transform.forward);
+            //Debug.DrawRay(shootRay.origin, shootRay.direction * 100f, Color.red);
+
+            Ray cameraRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            Debug.DrawRay(cameraRay.origin, cameraRay.direction * 3f, Color.green);
+            RaycastHit hit;
+
+            // Perform the raycast
+            if (Physics.Raycast(cameraRay, out hit,  3f))
+            {
+                // Check if the ray hit a collider with a tag
+                if (hit.collider.tag == "Boundry")
+                {
+                    // Do something with the hit object
+                    Debug.Log("Cam hitting boundry");
+                    playerCamera.transform.Translate(Vector3.forward * 100f * Time.deltaTime);
+
+                }
+                else
+                {
+                    Vector3 newPostion = playerCamera.transform.position;
+                    newPostion.z = -3.4f;
+                    playerCamera.transform.position = newPostion;
+                }
+            }
+
+
             transform.localEulerAngles = new Vector3(0, yaw, 0);
             playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+
         }
 
         #region Camera Zoom
+        if(enableZoom)
+        {
+            if (Input.GetButtonDown("Fire2"))
+            {
+                Debug.Log("Zoomy bam boomy");
+                reticle.SetActive(true);
+                playerCamera.fieldOfView = 40;
 
+            }
+            if(Input.GetButtonUp("Fire2"))
+            {
+                reticle.SetActive(false);
+                playerCamera.fieldOfView = 60;
+            }
+        }
 
 
 
