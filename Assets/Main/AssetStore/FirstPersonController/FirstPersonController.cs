@@ -164,7 +164,13 @@ public class FirstPersonController : MonoBehaviour
     public float gravityScale = 1f;
 
     private bool clippingControl = false;
-
+    private Vector3 newPosition;
+    private Vector3 cameraHolderVector3;
+    public float raycastVector3x = 0;
+    public float raycastVector3y = 0;
+    public float raycastVector3z = 0;
+    public GameObject rayCastAnchorGameObject;
+    public GameObject rayCastCameraAnchorGameObject;
     #endregion
 
 
@@ -542,29 +548,114 @@ public class FirstPersonController : MonoBehaviour
             //Ray shootRay = new Ray(shootLocation.transform.position, shootLocation.transform.forward);
             //Debug.DrawRay(shootRay.origin, shootRay.direction * 100f, Color.red);
 
-            Ray cameraRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-            Debug.DrawRay(cameraRay.origin, cameraRay.direction * 3f, Color.green);
-            RaycastHit hit;
+            //FRONT FACING RAY
 
-            // Perform the raycast
-            if (Physics.Raycast(cameraRay, out hit,  3f))
-            {
-                // Check if the ray hit a collider with a tag
-                if (hit.collider.tag == "Boundry")
-                {
-                    // Do something with the hit object
-                    Debug.Log("Cam hitting boundry");
-                    playerCamera.transform.Translate(Vector3.forward * 100f * Time.deltaTime);
+            //Ray cameraRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            //Debug.DrawRay(cameraRay.origin, cameraRay.direction * 3f, Color.green);
+            //RaycastHit hit;
+            //Vector3 tempPlayerRayVector3 = rayCastAnchorGameObject.transform.position;
+            //Vector3 tempCameraRayVector3 = rayCastCameraAnchorGameObject.transform.position;
 
-                }
-                else
-                {
-                    Vector3 newPostion = playerCamera.transform.position;
-                    newPostion.z = -3.4f;
-                    playerCamera.transform.position = newPostion;
-                }
-            }
+            //tempPlayerRayVector3.x += raycastVector3x;
+            //tempPlayerRayVector3.y += raycastVector3y;
+            //tempPlayerRayVector3.z+= raycastVector3z;
 
+            //Ray playerAnchoredBackRay = new Ray(tempPlayerRayVector3, -rayCastAnchorGameObject.transform.forward);
+            //Debug.DrawRay(playerAnchoredBackRay.origin, playerAnchoredBackRay.direction * 5f, Color.red);
+            //RaycastHit hit3;
+
+            //Ray cameraAnchoredBackRay = new Ray(tempCameraRayVector3, -rayCastCameraAnchorGameObject.transform.forward);
+            //Debug.DrawRay(cameraAnchoredBackRay.origin, cameraAnchoredBackRay.direction * 5f, Color.red);
+            //RaycastHit cameraAnchorHit;
+            
+
+            //// Perform the raycast
+            //if ((Physics.Raycast(playerAnchoredBackRay, out hit3, 5f)))
+            //{
+            //    // Check if the ray hit a collider with a tag]
+
+            //    newPosition = playerCamera.transform.localPosition;
+            //    if(newPosition.z < 3f)
+            //    {
+            //        newPosition.z += .1f;
+            //        playerCamera.transform.localPosition = newPosition;
+            //    }
+            //    //if (!clippingControl)
+            //    //{
+            //    //    newPosition = playerCamera.transform.localPosition;
+            //    //    newPosition.z = 3f;
+            //    //    playerCamera.transform.localPosition = newPosition;
+            //    //    clippingControl = true;
+            //    //    Debug.Log("newPosition" + newPosition);
+            //    //}
+            //}
+            //else
+            //{
+            //    if ((Physics.Raycast(playerAnchoredBackRay, out hit3, 9f)))
+            //    {
+            //    }
+            //    else
+            //    {
+            //        newPosition = playerCamera.transform.localPosition;
+            //        if (newPosition.z > -3f)
+            //        {
+            //            newPosition.z -= .1f;
+            //            playerCamera.transform.localPosition = newPosition;
+            //        }
+            //        //if (clippingControl)
+            //        //{
+            //        //    newPosition = playerCamera.transform.localPosition;
+            //        //    newPosition.z = -3f;
+            //        //    playerCamera.transform.localPosition = newPosition;
+            //        //    clippingControl = false;
+            //        //}
+            //    }
+                
+            //}
+
+
+            //if ((Physics.Raycast(cameraAnchoredBackRay, out cameraAnchorHit, 5f)))
+            //{
+            //    // Check if the ray hit a collider with a tag]
+
+            //    newPosition = playerCamera.transform.localPosition;
+            //    if (newPosition.z < 3f)
+            //    {
+            //        newPosition.z += .1f;
+            //        playerCamera.transform.localPosition = newPosition;
+            //    }
+            //    //if (!clippingControl)
+            //    //{
+            //    //    newPosition = playerCamera.transform.localPosition;
+            //    //    newPosition.z = 3f;
+            //    //    playerCamera.transform.localPosition = newPosition;
+            //    //    clippingControl = true;
+            //    //    Debug.Log("newPosition" + newPosition);
+            //    //}
+            //}
+            //else
+            //{
+            //    if ((Physics.Raycast(cameraAnchoredBackRay, out cameraAnchorHit, 9f)))
+            //    {
+            //    }
+            //    else
+            //    {
+            //        newPosition = playerCamera.transform.localPosition;
+            //        if (newPosition.z > -3f)
+            //        {
+            //            newPosition.z -= .1f;
+            //            playerCamera.transform.localPosition = newPosition;
+            //        }
+            //        //if (clippingControl)
+            //        //{
+            //        //    newPosition = playerCamera.transform.localPosition;
+            //        //    newPosition.z = -3f;
+            //        //    playerCamera.transform.localPosition = newPosition;
+            //        //    clippingControl = false;
+            //        //}
+            //    }
+
+            //}
 
             transform.localEulerAngles = new Vector3(0, yaw, 0);
             playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
@@ -687,6 +778,109 @@ public class FirstPersonController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Vector3 tempPlayerRayVector3 = rayCastAnchorGameObject.transform.position;
+        Vector3 tempCameraRayVector3 = rayCastCameraAnchorGameObject.transform.position;
+
+        tempPlayerRayVector3.x += raycastVector3x;
+        tempPlayerRayVector3.y += raycastVector3y;
+        tempPlayerRayVector3.z += raycastVector3z;
+
+        Ray playerAnchoredBackRay = new Ray(tempPlayerRayVector3, -rayCastAnchorGameObject.transform.forward);
+        Debug.DrawRay(playerAnchoredBackRay.origin, playerAnchoredBackRay.direction * 5f, Color.red);
+        RaycastHit hit3;
+
+        Ray cameraAnchoredBackRay = new Ray(tempCameraRayVector3, -rayCastCameraAnchorGameObject.transform.forward);
+        Debug.DrawRay(cameraAnchoredBackRay.origin, cameraAnchoredBackRay.direction * 5f, Color.red);
+        RaycastHit cameraAnchorHit;
+
+
+        // Perform the raycast
+        if ((Physics.Raycast(playerAnchoredBackRay, out hit3, 5f)))
+        {
+            // Check if the ray hit a collider with a tag]
+
+            newPosition = playerCamera.transform.localPosition;
+            if (newPosition.z < 3f)
+            {
+                newPosition.z += .1f;
+                playerCamera.transform.localPosition = newPosition;
+            }
+            //if (!clippingControl)
+            //{
+            //    newPosition = playerCamera.transform.localPosition;
+            //    newPosition.z = 3f;
+            //    playerCamera.transform.localPosition = newPosition;
+            //    clippingControl = true;
+            //    Debug.Log("newPosition" + newPosition);
+            //}
+        }
+        else
+        {
+            if ((Physics.Raycast(playerAnchoredBackRay, out hit3, 9f)))
+            {
+            }
+            else
+            {
+                newPosition = playerCamera.transform.localPosition;
+                if (newPosition.z > -3f)
+                {
+                    newPosition.z -= .1f;
+                    playerCamera.transform.localPosition = newPosition;
+                }
+                //if (clippingControl)
+                //{
+                //    newPosition = playerCamera.transform.localPosition;
+                //    newPosition.z = -3f;
+                //    playerCamera.transform.localPosition = newPosition;
+                //    clippingControl = false;
+                //}
+            }
+
+        }
+
+
+        if ((Physics.Raycast(cameraAnchoredBackRay, out cameraAnchorHit, 5f)))
+        {
+            // Check if the ray hit a collider with a tag]
+
+            newPosition = playerCamera.transform.localPosition;
+            if (newPosition.z < 3f)
+            {
+                newPosition.z += .1f;
+                playerCamera.transform.localPosition = newPosition;
+            }
+            //if (!clippingControl)
+            //{
+            //    newPosition = playerCamera.transform.localPosition;
+            //    newPosition.z = 3f;
+            //    playerCamera.transform.localPosition = newPosition;
+            //    clippingControl = true;
+            //    Debug.Log("newPosition" + newPosition);
+            //}
+        }
+        else
+        {
+            if ((Physics.Raycast(cameraAnchoredBackRay, out cameraAnchorHit, 9f)))
+            {
+            }
+            else
+            {
+                newPosition = playerCamera.transform.localPosition;
+                if (newPosition.z > -3f)
+                {
+                    newPosition.z -= .1f;
+                    playerCamera.transform.localPosition = newPosition;
+                }
+                //if (clippingControl)
+                //{
+                //    newPosition = playerCamera.transform.localPosition;
+                //    newPosition.z = -3f;
+                //    playerCamera.transform.localPosition = newPosition;
+                //    clippingControl = false;
+                //}
+            }
+
+        }
         #region Movement
         if (playerCanMove)
         {

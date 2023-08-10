@@ -6986,7 +6986,7 @@ Transform:
   m_Children:
   - {fileID: 344957299}
   m_Father: {fileID: 4918451714722057857}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &441881529
 MonoBehaviour:
@@ -18256,7 +18256,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685056969}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 29.8, y: 1.55, z: -0.46867}
+  m_LocalPosition: {x: 29.3, y: 1.55, z: -0.46867}
   m_LocalScale: {x: 5.9113464, y: 1, z: 7.1008406}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24940,6 +24940,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480187561}
   m_CullTransparentMesh: 1
+--- !u!1 &1517702775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1517702776}
+  m_Layer: 0
+  m_Name: RayCastAnchorCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517702776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517702775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.24, y: 1.3, z: 3.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4918451714722057857}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1519793271
 GameObject:
   m_ObjectHideFlags: 0
@@ -30791,6 +30822,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805081867}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1849822321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1849822322}
+  m_Layer: 0
+  m_Name: RayCastAnchorPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1849822322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849822321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0.685, z: 4.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4918451714722057857}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1849895093
 GameObject:
   m_ObjectHideFlags: 0
@@ -36813,7 +36875,7 @@ RectTransform:
   - {fileID: 2562435866211527856}
   - {fileID: 1656229214}
   m_Father: {fileID: 4918451714722057857}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -37208,7 +37270,7 @@ Transform:
   - {fileID: 2108945763}
   - {fileID: 1537409916}
   m_Father: {fileID: 4918451714722057857}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2083268892
 MonoBehaviour:
@@ -45370,10 +45432,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4918451714722057860}
   m_LocalRotation: {x: 0.1595606, y: -0, z: -0, w: 0.98718816}
-  m_LocalPosition: {x: 0.98, y: 1.41, z: -3.39}
+  m_LocalPosition: {x: 0.98, y: 1.41, z: -3}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1849822322}
+  - {fileID: 1517702776}
   - {fileID: 441881528}
   - {fileID: 4918451714816208387}
   - {fileID: 2083268891}
@@ -45413,7 +45477,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 17.169647
@@ -45572,7 +45636,7 @@ RectTransform:
   m_Children:
   - {fileID: 4918451715183663751}
   m_Father: {fileID: 4918451714722057857}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -45828,6 +45892,11 @@ MonoBehaviour:
   bobSpeed: 10
   bobAmount: {x: 0, y: 0, z: 0}
   gravityScale: 55
+  raycastVector3x: 0
+  raycastVector3y: 0
+  raycastVector3z: 0
+  rayCastAnchorGameObject: {fileID: 1849822321}
+  rayCastCameraAnchorGameObject: {fileID: 1517702775}
 --- !u!23 &4918451716113458204
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -45878,7 +45947,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4918451716113458194}
   m_LocalRotation: {x: -0.041933496, y: -0, z: -0, w: 0.9991204}
-  m_LocalPosition: {x: 13.26, y: 6.025, z: -3.805}
+  m_LocalPosition: {x: 20.39, y: 1.04, z: 2.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
