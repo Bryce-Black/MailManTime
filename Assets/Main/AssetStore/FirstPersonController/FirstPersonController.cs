@@ -426,7 +426,7 @@ public class FirstPersonController : MonoBehaviour
     {
         if(keySelectIndexInt == 0)
         {
-            keyNameInResourceFolder = "Key";
+            keyNameInResourceFolder = "RedKey";
         }
         else if(keySelectIndexInt == 1)
         {
@@ -434,7 +434,7 @@ public class FirstPersonController : MonoBehaviour
         }
         else
         {
-            keyNameInResourceFolder = "RedKey";
+            keyNameInResourceFolder = "Key";
         }
     }
     private void UpdateMailName()
@@ -505,6 +505,29 @@ public class FirstPersonController : MonoBehaviour
             UpdateMailName();
         }
     }
+    private void SelectItemBasedOnNumberPressed(int numbPressed)
+    {
+        if(keyInHand)
+        {
+            keySelectIndexInt = numbPressed-1;
+        }
+        else
+        {
+            mailSelectIndexInt = numbPressed-1;
+        }
+
+
+        if (keyInHand)
+        {
+            keySelectHighlight.gameObject.transform.position = keyUIGameObjects[keySelectIndexInt].transform.position;
+            UpdateKeyName();
+        }
+        else
+        {
+            mailSelectHighlight.gameObject.transform.position = mailUIGameObjects[mailSelectIndexInt].transform.position;
+            UpdateMailName();
+        }
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -524,6 +547,26 @@ public class FirstPersonController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectItemBasedOnNumberPressed(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectItemBasedOnNumberPressed(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectItemBasedOnNumberPressed(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if(!keyInHand)
+            {
+                SelectItemBasedOnNumberPressed(4);
+            }
+            
         }
         #region Camera
 

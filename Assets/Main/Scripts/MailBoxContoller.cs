@@ -106,6 +106,8 @@ public class MailBoxContoller : MonoBehaviour
         {
             timerInitialTimeText.text = "KABOOM";
             Debug.Log("Times UP!!");
+
+
             MailHasFailed();
             DecreaseMailSpawnTime();
             StartTimerCountDownCoroutine();
