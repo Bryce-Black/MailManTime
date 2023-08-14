@@ -17,6 +17,9 @@ using TMPro;
 
 public class FirstPersonController : MonoBehaviour
 {
+    public GameObject numberTextKey;
+    public GameObject numberTextMail;
+
     public GameObject reticle;
     public Animator poofAnimation;
     public TextMeshProUGUI screenInfoText;
@@ -413,12 +416,16 @@ public class FirstPersonController : MonoBehaviour
             keySelectHighlight.gameObject.SetActive(false);
             mailSelectHighlight.gameObject.SetActive(true);
             keyInHand = false;
+            numberTextMail.SetActive(true);
+            numberTextKey.SetActive(false);
         }
         else
         {
             Debug.Log("NotKeyInHand");
             keySelectHighlight.gameObject.SetActive(true);
             mailSelectHighlight.gameObject.SetActive(false);
+            numberTextMail.SetActive(false);
+            numberTextKey.SetActive(true);
             keyInHand = true;
         }
     }
