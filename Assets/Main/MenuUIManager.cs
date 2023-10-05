@@ -11,10 +11,6 @@ public class MenuUIManager : MonoBehaviour
     {
         SceneManager.LoadScene("MailManTime");
     }
-    private void Update()
-    {
-        
-    }
     public void QuitGame()
     {
         Application.Quit();

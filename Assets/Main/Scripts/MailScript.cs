@@ -31,9 +31,6 @@ public class MailScript : MonoBehaviour
         rb.AddTorque(spinDirection * 10f);
         delayDestroy = DelayDestroo(1f);
         StartCoroutine(delayDestroy);
-
-
-
     }
     private IEnumerator DelayDestroo(float waitTime)
     {
@@ -60,8 +57,6 @@ public class MailScript : MonoBehaviour
         }
         else
         {
-            //mailBoxController.MailHasFailed();
-            //Destroy(this.gameObject);
         }
     }
 

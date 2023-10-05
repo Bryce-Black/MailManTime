@@ -15,13 +15,11 @@ public class KeyScript : MonoBehaviour
         firstPersonController = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
         delayDestroy = DelayDestroo(1f);
         StartCoroutine(delayDestroy);
-
     }
 
     private IEnumerator DelayDestroo(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        //mailBoxController.MailHasFailed();
         firstPersonController.ScreenInfoActivate("Miss!");
         Destroy(this.gameObject);
     }

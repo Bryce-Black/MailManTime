@@ -17,7 +17,6 @@ public class PointerScript : MonoBehaviour
                 pointerObject.SetActive(true);
                 objectActivate = true;
             }
-            
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPosition.position - transform.position),
             100f * Time.deltaTime);
         }
